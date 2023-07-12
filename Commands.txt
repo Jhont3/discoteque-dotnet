@@ -1,0 +1,3 @@
+dotnet new webapi -o Discoteque
+dotnet build
+dotnet run   < go to "http://localhost:5253/swagger/index.html" URL to watch api documentation >
