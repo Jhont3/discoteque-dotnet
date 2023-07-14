@@ -1,3 +1,31 @@
+COMMANDS:
+dotnet new sln -n Discoteque
+dotnet new classlib -o Discoteque.Business
+dotnet new webapi -o Discoteque.API
+dotnet new classlib -o Discoteque.Data
+dotnet sln add Discoteque.API/
+dotnet sln add Discoteque.Business/
+dotnet sln add Discoteque.Data/
+dotnet build
+
+cd Discoteque.API/
+dotnet add package Microsoft.EntityFrameworkCore.InMemory 
+
+cd Discoteque.Data/
+dotnet add package Microsoft.EntityFrameworkCore.InMemory
+
+<Root-Folder> cd Discoteque.API
+dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design -v 7.0.7
+dotnet add package Microsoft.EntityFrameworkCore.Design -v 7.0.7
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer -v 7.0.7
+dotnet tool uninstall -g dotnet-aspnet-codegenerator    ...<It can be error can't find if u have last version - ignore it>
+dotnet tool install -g dotnet-aspnet-codegenerator
+dotnet tool list -g
+dotnet tool update -g dotnet-ef
+dotnet add package  Microsoft.EntityFrameworkCore.Tools --version  7.0.7
+
+
+Others...
 dotnet new webapi -o Discoteque
 dotnet build
 dotnet run   < go to "http://localhost:5253/swagger/index.html" URL to watch api documentation >
