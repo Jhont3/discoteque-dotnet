@@ -24,6 +24,11 @@ dotnet tool list -g
 dotnet tool update -g dotnet-ef
 dotnet add package  Microsoft.EntityFrameworkCore.Tools --version  7.0.7
 
+dotnet add Discoteque.API reference Discoteque.Data/Discoteque.Data.csproj
+dotnet add Discoteque.API reference Discoteque.Business/Discoteque.Business.csproj
+dotnet add Discoteque.Business/ reference Discoteque.Data/Discoteque.Data.csproj
+
+dotnet-aspnet-codegenerator controller -name ArtistsController -async -api -outDir Controllers --noViews
 
 Others...
 dotnet new webapi -o Discoteque

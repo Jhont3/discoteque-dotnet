@@ -29,4 +29,12 @@ public class WeatherForecastController : ControllerBase
         })
         .ToArray();
     }
+
+    // [HttpGet(Name = "WomenWhoCode")]
+    // public async Task<IActionResult> WomenWhoCode()
+    // {
+    //     var name = "My name is Jhont";
+    //     name += " and I like videogames";
+    //     return Ok(name);
+    // }
 }
