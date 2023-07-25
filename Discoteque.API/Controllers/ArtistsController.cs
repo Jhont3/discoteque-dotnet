@@ -12,35 +12,36 @@ namespace Discoteque.API.Controllers
     [Route("api/[controller]")] // [controller] makes that you need just put artirst
     [ApiController]
     public class ArtistsController : ControllerBase
-    {
-        private readonly IArtistService _artistService;  // dependency injection used from project.cs
+ {
+        private readonly IArtistsService _artistsService;
 
-        public ArtistsController(IArtistService artistService) 
+        public ArtistsController(IArtistsService artistsService)
         {
-            _artistService = artistService;
+            _artistsService = artistsService;
         }
 
         [HttpGet]
         [Route("GetAllArtistsAsync")]
         public async Task<IActionResult> GetAllArtistsAsync()
         {
-            var artists = await _artistService.GetArtistsAsync();
+            var artists = await _artistsService.GetArtistsAsync();
             return Ok(artists);
         }
 
 
-        // TODO: IMplementame correctamnete
-        /* tarea 3
-            Implementar un nuevo endpoint donde se cree un usuario utilizando
-            _artistsService.CreateArtist
-        */
-
         [HttpPost]
-        public async Task<IActionResult> Post(Artist artist)
+        [Route("CreateArtistAsync")]
+        public async Task<IActionResult> CreateArtistAsync(Artist artist)
         {
-            var createdArtist = await _artistService.CreateArtist(artist);
-            return Ok(createdArtist);
+            var result = await _artistsService.CreateArtist(artist);
+            return Ok(result);
         }
-        
+
+        [HttpPatch]
+        [Route("UpdateArtistAsync")]
+        public async Task<IActionResult> UpdateArtistAsync(Artist artist)
+        {
+            return Ok();
+        }
     }
 }

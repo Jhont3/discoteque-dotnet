@@ -2,7 +2,7 @@ using Discoteque.Data.Models;
 
 namespace Discoteque.Business.IServices;
 
-public interface IArtistService
+public interface IArtistsService
 {
     Task<IEnumerable<Artist>> GetArtistsAsync();
     Task<Artist> GetById(int id);
