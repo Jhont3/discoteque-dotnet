@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Discoteque.Data;
 using Discoteque.Business.IServices;
 using Discoteque.Business.Services;
-// using Discoteque.Data.Services;
+using Discoteque.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +19,7 @@ builder.Services.AddDbContext<DiscotequeContext>(
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IArtistsService, ArtistsService>();  // dependency injection, no need to use alwaus new
+builder.Services.AddScoped<IAlbumService, AlbumService>();
 
 var app = builder.Build();
 PopulateDB(app);
@@ -43,7 +44,7 @@ async void PopulateDB(WebApplication app)
     using (var scope = app.Services.CreateScope())
     {
         var artistService = scope.ServiceProvider.GetRequiredService<IArtistsService>();
-        // var albumService = scope.ServiceProvider.GetRequiredService<IAlbumService>();
+        var albumService = scope.ServiceProvider.GetRequiredService<IAlbumService>();
                 
         await artistService.CreateArtist(new Discoteque.Data.Models.Artist{
             Name = "Karol G",
@@ -57,20 +58,20 @@ async void PopulateDB(WebApplication app)
             IsOnTour = true
         });
         
-        // await albumService.CreateAlbum(new Discoteque.Data.Models.Album{
-        //     Id = 1,
-        //     Year = 2017,
-        //     Name = "Unstopabble",
-        //     ArtistId = 1,
-        //     Genre = Discoteque.Data.Models.Genres.Urban
-        // });
+        await albumService.CreateAlbum(new Discoteque.Data.Models.Album{
+            Id = 1,
+            Year = 2017,
+            Name = "Unstopabble",
+            ArtistId = 1,
+            Genre = Discoteque.Data.Models.Genres.Urban
+        });
         
-        // await albumService.CreateAlbum(new Discoteque.Data.Models.Album{
-        //     Year = 2019,
-        //     Name = "Ocean",
-        //     ArtistId = 1,
-        //     Genre = Discoteque.Data.Models.Genres.Urban
-        // });
+        await albumService.CreateAlbum(new Discoteque.Data.Models.Album{
+            Year = 2019,
+            Name = "Ocean",
+            ArtistId = 1,
+            Genre = Discoteque.Data.Models.Genres.Urban
+        });
     }
 
 }
