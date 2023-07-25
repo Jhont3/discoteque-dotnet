@@ -10,6 +10,6 @@ public class DiscotequeContext : DbContext
 
     }
 
-    public DbSet<Artist> Artists { get; set; }  // tabla
+    public DbSet<Artist> Artists { get; set; }  // reference to table
     public DbSet<Album> Albums { get; set; }
 }

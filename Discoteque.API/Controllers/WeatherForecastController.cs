@@ -4,6 +4,7 @@ namespace Discoteque.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+//it omtes controller, usually api/[controller]/[route] and put it again in the Name from HttpGet
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries = new[]

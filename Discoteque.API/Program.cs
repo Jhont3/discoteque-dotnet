@@ -16,7 +16,7 @@ builder.Services.AddDbContext<DiscotequeContext>(
     opt => opt.UseInMemoryDatabase("Discoteque")
 );
 
-builder.Services.AddScoped<IArtistService, ArtistService>();
+builder.Services.AddScoped<IArtistService, ArtistService>();  // dependency injection, no need to use alwaus new
 
 var app = builder.Build();
 
