@@ -29,7 +29,8 @@ namespace Discoteque.Business.Services
             var song = await _unitOfWork.SongRepository.FindAsync(id);
             if (song != null)
             {
-                await _unitOfWork.SongRepository.Delete(id);
+                await _unitOfWork.SongRepository.Delete(song);
+                await _unitOfWork.SaveAsync();
                 return "Song with Id: " + song.Id + " was deleted successfully";
             }
             return "Something went wrong, contact the administrator";
