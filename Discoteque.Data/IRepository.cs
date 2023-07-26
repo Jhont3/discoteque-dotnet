@@ -13,7 +13,7 @@ namespace Discoteque.Data.IRepositories
         Task<TEntity> FindAsync(Tid id);
         Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter =  null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string inlcudeProperties = "");
+            string includeProperties = "");
         Task Update(TEntity entity);
         Task Delete(TEntity entity);
         Task Delete(Tid id);

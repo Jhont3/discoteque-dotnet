@@ -13,5 +13,4 @@ public class Artist : BaseEntity<int>
     public string Label { get; set; } = "";
     public bool IsOnTour { get; set; }
     
-
 }

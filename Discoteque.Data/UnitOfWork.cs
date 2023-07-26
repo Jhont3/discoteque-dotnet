@@ -11,6 +11,8 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     private bool _disposed = false;
     private IRepository<int, Artist> _artistRepository;
     private IRepository<int, Album> _albumRepository;
+    private IRepository<int, Song> _songRepository;
+    private IRepository<int, Tour> _tourRepository;
 
     public UnitOfWork(DiscotequeContext context)
     {
@@ -38,6 +40,29 @@ public class UnitOfWork : IUnitOfWork, IDisposable
                 _albumRepository = new Repository<int, Album>(_context);
             }
             return _albumRepository;
+        }
+    }
+    public IRepository<int, Song> SongRepository
+    {
+        get
+        {
+            if(_songRepository is null)
+            {
+                _songRepository = new Repository<int, Song>(_context);
+            }
+            return _songRepository;
+        }
+    }
+
+    public IRepository<int, Tour> TourRepository
+    {
+        get
+        {
+            if(_tourRepository is null)
+            {
+                _tourRepository = new Repository<int, Tour>(_context);
+            }
+            return _tourRepository;
         }
     }
 
