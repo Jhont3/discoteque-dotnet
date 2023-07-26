@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Discoteque.Business.IServices;
 using Discoteque.Data;
@@ -23,19 +24,25 @@ namespace Discoteque.Business.Services
             return Song;
         }
 
-        // TODO: Verifies functionality
-        public async Task<string> DeleteById(int id)
+        public async Task DeleteById(int id)
         {
-            var song = await _unitOfWork.SongRepository.FindAsync(id);
-            if (song != null)
+            try
             {
-                await _unitOfWork.SongRepository.Delete(song);
-                await _unitOfWork.SaveAsync();
-                return "Song with Id: " + song.Id + " was deleted successfully";
+                var song = await _unitOfWork.SongRepository.FindAsync(id);
+                if (song != null)
+                {
+                    await _unitOfWork.SongRepository.Delete(song);
+                    await _unitOfWork.SaveAsync();
+                    return;
+                }  
             }
-            return "Something went wrong, contact the administrator";
+            catch (System.Exception)
+            {
+                return;
+            }
+            
         }
-
+        
         public async Task<Song> GetById(int id)
         {
             var song = await _unitOfWork.SongRepository.FindAsync(id);
@@ -59,8 +66,7 @@ namespace Discoteque.Business.Services
             else
             {
                 songs = await _unitOfWork.SongRepository.GetAllAsync();
-            }
-
+            }   
             return songs;
         }
 

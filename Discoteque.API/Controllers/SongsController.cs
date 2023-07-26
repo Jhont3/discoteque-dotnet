@@ -65,8 +65,8 @@ namespace Discoteque.API.Controllers
         [Route("DeleteSong")]
         public async Task<IActionResult> DeleteSong(int id)
         {
-            var result = await _songsService.DeleteById(id);
-            return Ok(result);
+            await _songsService.DeleteById(id);
+            return Ok();
         }
         
     }

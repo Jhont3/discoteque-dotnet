@@ -13,6 +13,6 @@ namespace Discoteque.Business.IServices
         Task<Song> GetById(int id);
         Task<Song> CreateSong(Song Song);
         Task<Song> UpdateSong(Song Song);
-        Task<string> DeleteById(int id);
+        Task DeleteById(int id);
     }
 }

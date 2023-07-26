@@ -9,10 +9,10 @@ namespace Discoteque.Business.IServices
     public interface ITourService
     {
         Task<IEnumerable<Tour>> GetToursAsync(bool areReferencesLoaded);
-        Task<IEnumerable<Tour>> GetTourName(string tour);
+        Task<IEnumerable<Tour>> GetToursByArtist(string artist);
         Task<Tour> GetById(int id);
         Task<Tour> CreateTour(Tour Tour);
         Task<Tour> UpdateTour(Tour Tour);
-        Task<string> DeleteById(int id);
+        Task DeleteById(int id);
     }
 }
