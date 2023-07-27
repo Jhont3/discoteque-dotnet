@@ -17,9 +17,21 @@ public class ArtistsService : IArtistsService
 
     public async Task<Artist> CreateArtist(Artist artist)
     {
-        await _unitOfWork.ArtistRepository.AddAsync(artist);
-        await _unitOfWork.SaveAsync();
-        return artist;
+        try
+        {
+            if (artist.Name.Length > 99)
+            {
+                return null;
+            }
+            await _unitOfWork.ArtistRepository.AddAsync(artist);
+            await _unitOfWork.SaveAsync();
+            return artist;
+        }
+        catch (System.Exception ex)
+        {
+             return null;
+        }
+        
     }
 
     public async Task<IEnumerable<Artist>> GetArtistsAsync()

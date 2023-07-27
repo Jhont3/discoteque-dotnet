@@ -35,12 +35,22 @@ public class AlbumService : IAlbumService
             {
                 return null;
             }
+
+            var noPermitedNames = new List<string> { "revolución", "revolucion", "poder", "amor", "guerra" };
+            foreach (var name in noPermitedNames)
+            {
+                if (album.Name.ToLower().Contains(name))
+                {
+                    return null;
+                }
+            }
             
             var newAlbum = new Album{
                 Name = album.Name,
                 ArtistId = album.ArtistId,
                 Genre = album.Genre,
-                Year = album.Year
+                Year = album.Year,
+                Cost = album.Cost
             };
         
             await _unitOfWork.AlbumRepository.AddAsync(newAlbum);

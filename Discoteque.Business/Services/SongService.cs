@@ -45,7 +45,7 @@ namespace Discoteque.Business.Services
 
         public async Task<List<Song>> CreateSong(List<Song> songs)
         {
-            // TODO: implement validations and correct operation
+
             foreach (var song in songs)
             {
                 var album = await _unitOfWork.AlbumRepository.FindAsync(song.AlbumId);
