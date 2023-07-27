@@ -18,10 +18,6 @@ namespace Discoteque.Business.Services
             _unitOfWork = unitOfWork;
         }
 
-        // public AlbumService(IUnitOfWork unitOfWork)
-        // {
-        //     _unitOfWork = unitOfWork;
-        // }
         public async Task<Song> CreateSong(Song song)
         {
             var album = await _unitOfWork.AlbumRepository.FindAsync(song.AlbumId);

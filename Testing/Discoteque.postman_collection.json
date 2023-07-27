@@ -1,0 +1,694 @@
+{
+	"info": {
+		"_postman_id": "cc01e597-e2a7-413f-90de-3b636e231b04",
+		"name": "Discoteque",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21396733"
+	},
+	"item": [
+		{
+			"name": "Artists",
+			"item": [
+				{
+					"name": "Find All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/api/artists/GetAllArtistsAsync",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"artists",
+								"GetAllArtistsAsync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Artist",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\" : \"ToDoRandomArtist\",\r\n    \"Label\" : \"Label\",\r\n    \"IsOnTour\" : true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/api/artists/CreateArtistAsync",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"artists",
+								"CreateArtistAsync"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Album",
+			"item": [
+				{
+					"name": "Find All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/api/album/getalbums?areReferencesLoaded=true",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"album",
+								"getalbums"
+							],
+							"query": [
+								{
+									"key": "areReferencesLoaded",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/api/album/getalbumbyid?id=2",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"album",
+								"getalbumbyid"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find By Artist",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/api/album/GetSongsByAlbumName?album=Juanes",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"album",
+								"GetSongsByAlbumName"
+							],
+							"query": [
+								{
+									"key": "album",
+									"value": "Juanes"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Album",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"LaundryRoom\",\r\n    \"year\": 2005,\r\n    \"genre\": 3,\r\n    \"artistId\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/api/album/CreateAlbum",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"album",
+								"CreateAlbum"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Others",
+			"item": [
+				{
+					"name": "Test WeatherForecast",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/WeatherForecast",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"WeatherForecast"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Songs",
+			"item": [
+				{
+					"name": "Find All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/api/songs/GetSongs?areReferencesLoaded=true",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"songs",
+								"GetSongs"
+							],
+							"query": [
+								{
+									"key": "areReferencesLoaded",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/api/songs/getsongbyid?id=1",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"songs",
+								"getsongbyid"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find By Album",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/api/songs/GetSongsByAlbumName?album=Unstopabble",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"songs",
+								"GetSongsByAlbumName"
+							],
+							"query": [
+								{
+									"key": "album",
+									"value": "Unstopabble"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Song",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"name\": \"Euforia\",\r\n        \"duration\": 180,\r\n        \"albumId\": 60\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/api/songs/CreateSongAsync",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"songs",
+								"CreateSongAsync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Songs",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"name\": \"Euforia\",\r\n        \"duration\": 180,\r\n        \"albumId\": 1\r\n    },\r\n    {\r\n        \"name\": \"asdad\",\r\n        \"duration\": 180,\r\n        \"albumId\": 1\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/api/songs/CreateSongsAsync",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"songs",
+								"CreateSongsAsync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5134/api/songs/DeleteSong?id=1",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"songs",
+								"DeleteSong"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Karma\",\r\n    \"duration\": 120,\r\n    \"albumId\": 1,\r\n    \"id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/api/songs/UpdateSongAsync",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"songs",
+								"UpdateSongAsync"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tours",
+			"item": [
+				{
+					"name": "Find All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/api/tours/GetTours?areReferencesLoaded=true",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"tours",
+								"GetTours"
+							],
+							"query": [
+								{
+									"key": "areReferencesLoaded",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/api/tours/GetToursById?id=1",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"tours",
+								"GetToursById"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find By Artist",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/api/tours/GetToursByArtistName?artist=Shakira",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"tours",
+								"GetToursByArtistName"
+							],
+							"query": [
+								{
+									"key": "artist",
+									"value": "Shakira"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Tour",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"EuroTale\",\r\n    \"city\": \"France\",\r\n    \"date\": \"2022-07-26\",\r\n    \"IscompletelySold\": false,\r\n    \"ArtistId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/api/tours/CreateTourAsync",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"tours",
+								"CreateTourAsync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5134/api/songs/DeleteSong?id=1",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"songs",
+								"DeleteSong"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Karma\",\r\n    \"duration\": 120,\r\n    \"albumId\": 1,\r\n    \"id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5134/api/songs/UpdateSongAsync",
+							"host": [
+								"localhost"
+							],
+							"port": "5134",
+							"path": [
+								"api",
+								"songs",
+								"UpdateSongAsync"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
