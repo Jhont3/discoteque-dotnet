@@ -46,20 +46,18 @@ namespace Discoteque.Business.Services
         public async Task<List<Song>> CreateSong(List<Song> songs)
         {
             // TODO: implement validations and correct operation
-            // foreach (var song in songs)
-            // {
-            //     if (song )
-            //     {
-                     
-            //     }
-
-            // }
-            
-            //     await _unitOfWork.SongRepository.AddAsync(Songs);
-            //     await _unitOfWork.SaveAsync();
-
-            // return Songs;
-           return songs;
+            foreach (var song in songs)
+            {
+                var album = await _unitOfWork.AlbumRepository.FindAsync(song.AlbumId);
+                if (album == null) { return null; }
+            }
+            foreach (var song in songs)
+            {
+                await _unitOfWork.SongRepository.AddAsync(song);
+                await _unitOfWork.SaveAsync();
+            }
+            return songs;
+    
         }
 
         public async Task DeleteById(int id)

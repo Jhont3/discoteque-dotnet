@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Discoteque.Business.IServices;
-using Discoteque.Business.Utilities;
 using Discoteque.Data;
 using Discoteque.Data.Models;
 
@@ -12,8 +11,6 @@ namespace Discoteque.Business.Services
     public class TourService : ITourService
     {
         private IUnitOfWork _unitOfWork;
-
-        private DateTimeService _dateService;
 
         public TourService(IUnitOfWork unitOfWork)
         {
@@ -59,17 +56,17 @@ namespace Discoteque.Business.Services
         {
             var tour = await _unitOfWork.TourRepository.FindAsync(id);
 
-            var newDate = _dateService.ConvertToIsoDate(tour.Date);
+            // var newDate = ConvertToIsoDate(tour.Date);
             
-            var newTour = new Tour(){
-                Name = tour.Name,
-                IscompletelySold = tour.IscompletelySold,
-                Date = _dateService.ConvertDateTimeToString(newDate),
-                ArtistId = tour.ArtistId,
-                City = tour.City,
-            };
+            // var newTour = new Tour(){
+            //     Name = tour.Name,
+            //     IscompletelySold = tour.IscompletelySold,
+            //     Date = ConvertDateTimeToString(newDate),
+            //     ArtistId = tour.ArtistId,
+            //     City = tour.City,
+            // };
 
-            return newTour;
+            return tour;
         }
 
         public async Task<IEnumerable<Tour>> GetToursByArtist(string artist)
@@ -84,7 +81,7 @@ namespace Discoteque.Business.Services
             IEnumerable<Tour> tours;
             if(areReferencesLoaded)
             {
-                tours = await _unitOfWork.TourRepository.GetAllAsync(null, x => x.OrderBy(x => x.Id), new Album().GetType().Name);
+                tours = await _unitOfWork.TourRepository.GetAllAsync(null, x => x.OrderBy(x => x.Id), new Artist().GetType().Name);
             }
             else
             {
