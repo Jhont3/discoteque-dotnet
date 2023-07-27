@@ -11,8 +11,8 @@ namespace Discoteque.Business.IServices
         Task<IEnumerable<Tour>> GetToursAsync(bool areReferencesLoaded);
         Task<IEnumerable<Tour>> GetToursByArtist(string artist);
         Task<Tour> GetById(int id);
-        Task<Tour> CreateTour(Tour Tour);
-        Task<Tour> UpdateTour(Tour Tour);
+        Task<Tour> CreateTour(Tour tour);
+        Task<Tour> UpdateTour(Tour tour);
         Task DeleteById(int id);
     }
 }

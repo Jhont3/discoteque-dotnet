@@ -53,6 +53,14 @@ namespace Discoteque.API.Controllers
             return Ok(result);
         }
 
+        [HttpPost]
+        [Route("CreateSongsAsync")]
+        public async Task<IActionResult> CreateSongAsync(List<Song> songs)
+        {
+            var result = await _songsService.CreateSong(songs);
+            return Ok(result);
+        }
+
         [HttpPut]
         [Route("UpdateSongAsync")]
         public async Task<IActionResult> UpdateSongAsync(Song song)

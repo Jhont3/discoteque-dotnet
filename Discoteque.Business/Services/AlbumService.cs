@@ -23,17 +23,36 @@ public class AlbumService : IAlbumService
     /// <param name="album">A new album entity</param>
     /// <returns>The created album with an Id assigned</returns>
     public async Task<Album> CreateAlbum(Album album)
-    {
-        var newAlbum = new Album{
-            Name = album.Name,
-            ArtistId = album.ArtistId,
-            Genre = album.Genre,
-            Year = album.Year
-        };
+    {   
+        try
+        {   
+            if (album.Year < 1905 || album.Year > 2023)
+            {
+                return null;
+            }
+
+            if (album.Cost < 0)
+            {
+                return null;
+            }
+            
+            var newAlbum = new Album{
+                Name = album.Name,
+                ArtistId = album.ArtistId,
+                Genre = album.Genre,
+                Year = album.Year
+            };
         
-        await _unitOfWork.AlbumRepository.AddAsync(newAlbum);
-        await _unitOfWork.SaveAsync();
-        return newAlbum;
+            await _unitOfWork.AlbumRepository.AddAsync(newAlbum);
+            await _unitOfWork.SaveAsync();
+            return newAlbum;
+            
+        }
+        catch (System.Exception ex)
+        {
+             return null;
+        }
+
     }
 
     /// <summary>

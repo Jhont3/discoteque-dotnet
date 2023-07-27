@@ -69,6 +69,6 @@ public class AlbumController : ControllerBase
     public async Task<IActionResult> CreateAlbumsAsync(Album album)
     {
         var result = await _albumService.CreateAlbum(album);
-        return result==null ? Ok(result) : StatusCode(StatusCodes.Status500InternalServerError,  "Something went wrong");
+        return result !=null ? Ok(result) : StatusCode(StatusCodes.Status500InternalServerError,  "Something went wrong");
     }
 }

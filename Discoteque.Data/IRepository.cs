@@ -17,5 +17,6 @@ namespace Discoteque.Data.IRepositories
         Task Update(TEntity entity);
         Task Delete(TEntity entity);
         Task Delete(Tid id);
+
     }
 }

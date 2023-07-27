@@ -31,6 +31,8 @@ public  class Album : BaseEntity<int>
     /// The <see cref="Artist"/> Entity this album is refering to
     /// </summary> <summary>
     public virtual Artist? Artist { get; set; } 
+
+    public double Cost { get; set; } = 50000.00;
 }
 
 /// <summary>

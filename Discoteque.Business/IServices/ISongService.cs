@@ -12,6 +12,7 @@ namespace Discoteque.Business.IServices
         Task<IEnumerable<Song>> GetSongsByAlbumName(string song);
         Task<Song> GetById(int id);
         Task<Song> CreateSong(Song Song);
+        Task<List<Song>> CreateSong(List<Song> Songs);
         Task<Song> UpdateSong(Song Song);
         Task DeleteById(int id);
     }

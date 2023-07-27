@@ -17,11 +17,49 @@ namespace Discoteque.Business.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<Song> CreateSong(Song Song)
+
+        // public AlbumService(IUnitOfWork unitOfWork)
+        // {
+        //     _unitOfWork = unitOfWork;
+        // }
+        public async Task<Song> CreateSong(Song song)
         {
-            await _unitOfWork.SongRepository.AddAsync(Song);
+            var album = await _unitOfWork.AlbumRepository.FindAsync(song.AlbumId);
+            if (album == null)
+            {
+                return null;
+            }
+            
+            // TODO: consider return album
+            // var newSong = new Song{
+            // Name = album.Name,
+            // Album = album,
+            // Genre = album.Genre,
+            // Year = album.Year
+            // };
+
+            await _unitOfWork.SongRepository.AddAsync(song);
             await _unitOfWork.SaveAsync();
-            return Song;
+            return song;
+        }
+
+        public async Task<List<Song>> CreateSong(List<Song> songs)
+        {
+            // TODO: implement validations and correct operation
+            // foreach (var song in songs)
+            // {
+            //     if (song )
+            //     {
+                     
+            //     }
+
+            // }
+            
+            //     await _unitOfWork.SongRepository.AddAsync(Songs);
+            //     await _unitOfWork.SaveAsync();
+
+            // return Songs;
+           return songs;
         }
 
         public async Task DeleteById(int id)
@@ -76,5 +114,6 @@ namespace Discoteque.Business.Services
             await _unitOfWork.SaveAsync();
             return song;
         }
+
     }
 }

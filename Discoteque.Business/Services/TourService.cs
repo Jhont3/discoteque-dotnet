@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Discoteque.Business.IServices;
+using Discoteque.Business.Utilities;
 using Discoteque.Data;
 using Discoteque.Data.Models;
 
@@ -12,15 +13,28 @@ namespace Discoteque.Business.Services
     {
         private IUnitOfWork _unitOfWork;
 
+        private DateTimeService _dateService;
+
         public TourService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
         public async Task<Tour> CreateTour(Tour tour)
         {
-            await _unitOfWork.TourRepository.AddAsync(tour);
-            await _unitOfWork.SaveAsync();
-            return tour;
+            try
+            {
+                if (tour.Date.Year > 2021)
+                {
+                    await _unitOfWork.TourRepository.AddAsync(tour);
+                    await _unitOfWork.SaveAsync();
+                    return tour;  
+                }
+            }
+            catch (System.Exception ex)
+            {
+                 return null;
+            }
+            return null;
         }
 
         public async Task DeleteById(int id)
@@ -43,8 +57,19 @@ namespace Discoteque.Business.Services
 
         public async Task<Tour> GetById(int id)
         {
-            var song = await _unitOfWork.TourRepository.FindAsync(id);
-            return song;
+            var tour = await _unitOfWork.TourRepository.FindAsync(id);
+
+            var newDate = _dateService.ConvertToIsoDate(tour.Date);
+            
+            var newTour = new Tour(){
+                Name = tour.Name,
+                IscompletelySold = tour.IscompletelySold,
+                Date = _dateService.ConvertDateTimeToString(newDate),
+                ArtistId = tour.ArtistId,
+                City = tour.City,
+            };
+
+            return newTour;
         }
 
         public async Task<IEnumerable<Tour>> GetToursByArtist(string artist)

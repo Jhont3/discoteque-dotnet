@@ -12,7 +12,8 @@ namespace Discoteque.Data.Models
       public string Name { get; set; } = "";
       public string City { get; set; } = "";
 
-      // [GreaterThan2021(ErrorMessage = "The date must be greater than the year 2021.")] 
+ 
+      [GreaterThan2021(ErrorMessage = "The date must be greater than the year 2021.")] 
       public DateTime Date { get; set; }
       public bool IscompletelySold { get; set; }
       
@@ -21,17 +22,17 @@ namespace Discoteque.Data.Models
       public virtual Artist ? Artist { get; set; } 
 
     }
-    // //Just to know
-    // public class GreaterThan2021Attribute : ValidationAttribute
-    // {
-    //     public override bool IsValid(object value)
-    //     {
-    //         if (value is DateTime date)
-    //         {
-    //             return date.Year > 2021;
-    //         }
-    //         return false;
-    //     }
-    // }
+    //Just to know
+    public class GreaterThan2021Attribute : ValidationAttribute
+    {
+        public override bool IsValid(object value)
+        {
+            if (value is DateTime date)
+            {
+                return date.Year > 2021;
+            }
+            return false;
+        }
+    }
 
 }
