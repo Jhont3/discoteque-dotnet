@@ -68,6 +68,7 @@ where TEntity : BaseEntity<Tid>
     {
         TEntity entityToDetelete = await _dbSet.FindAsync(id);
         Delete(entityToDetelete);
+        
     }
 
     public virtual async Task Update(TEntity entity)

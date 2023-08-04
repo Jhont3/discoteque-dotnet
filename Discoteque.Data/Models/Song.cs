@@ -11,8 +11,9 @@ namespace Discoteque.Data.Models
     {
         public string Name { get; set; } = "";
         public int Duration { get; set; }
-            
-        [ForeignKey("Id")]
+
+        // [ForeignKey("Id")]
+        [ForeignKey("Album")]  
         [Required]
         public int AlbumId { get; set; }
 

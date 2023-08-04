@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Discoteque.Business.IServices;
 using Discoteque.Data;
 using Discoteque.Data.Models;
+using Discoteque.Data.Dto;
+using System.Net;
 
 namespace Discoteque.Business.Services
 {
@@ -16,22 +18,22 @@ namespace Discoteque.Business.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<Tour> CreateTour(Tour tour)
+        public async Task<TourMessage> CreateTour(Tour tour)
         {
             try
             {
-                if (tour.Date.Year > 2021)
+                var artist = await _unitOfWork.ArtistRepository.FindAsync(tour.ArtistId);
+                if (tour.Date.Year > 2021 || artist == null)
                 {
                     await _unitOfWork.TourRepository.AddAsync(tour);
                     await _unitOfWork.SaveAsync();
-                    return tour;  
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception)
             {
-                 return null;
+                  return BuildResponse(HttpStatusCode.InternalServerError, BaseMessageStatus.INTERNAL_SERVER_ERROR_500);
             }
-            return null;
+            return BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, new(){tour});
         }
 
         public async Task DeleteById(int id)
@@ -95,6 +97,25 @@ namespace Discoteque.Business.Services
             await _unitOfWork.TourRepository.Update(tour);
             await _unitOfWork.SaveAsync();
             return tour;
+        }
+
+        private static TourMessage BuildResponse(HttpStatusCode statusCode, string message)
+        {
+            return new TourMessage{
+                Message = message,
+                TotalElements = 0,
+                StatusCode = statusCode                
+            }; 
+        }
+    
+        private static TourMessage BuildResponse(HttpStatusCode statusCode, string message, List<Tour> tours)
+        {
+            return new TourMessage{
+                Message = message,
+                TotalElements = tours.Count,
+                StatusCode = statusCode,
+                Tours = tours                
+            }; 
         }
     }
 }

@@ -30,6 +30,13 @@ dotnet add Discoteque.Business/ reference Discoteque.Data/Discoteque.Data.csproj
 
 dotnet-aspnet-codegenerator controller -name ArtistsController -async -api -outDir Controllers --noViews
 
+cd D.. .Data
+dotnet add package Microsoft.EntityFrameworkCore.Design -v 7.0.7
+dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore -v 7.0.9
+
+TOOLS:
+Polyglot Notebooks
+
 Others...
 dotnet new webapi -o Discoteque
 dotnet build

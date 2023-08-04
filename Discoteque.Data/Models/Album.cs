@@ -24,7 +24,8 @@ public  class Album : BaseEntity<int>
     /// The <see cref="Artist"/> id this Album belongs to
     /// </summary>
     /// <value></value>
-    [ForeignKey("Id")]
+    // [ForeignKey("Id")]
+    [ForeignKey("Artist")]
     public int ArtistId { get; set; }
 
     /// <summary>

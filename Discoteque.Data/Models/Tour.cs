@@ -14,14 +14,16 @@ namespace Discoteque.Data.Models
 
  
     //   [GreaterThan2021(ErrorMessage = "The date must be greater than the year 2021.")] 
-      public DateOnly Date { get; set; }
-      public bool IscompletelySold { get; set; }
+      public DateTime Date { get; set; } = DateTime.Now;
+      public bool IscompletelySold { get; set; } = false;
       
-      [ForeignKey("Id")]
+      // [ForeignKey("Id")] More explicit but less maintainable
+      [ForeignKey("Artist")] 
       public int ArtistId { get; set; }
       public virtual Artist ? Artist { get; set; } 
 
     }
+
     //Just to know
     // public class GreaterThan2021Attribute : ValidationAttribute
     // {

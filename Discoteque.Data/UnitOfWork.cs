@@ -23,10 +23,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     {
         get 
         {
-            if (_artistRepository is null)
-            {
-                _artistRepository = new Repository<int, Artist>(_context);
-            }
+            _artistRepository ??= new Repository<int, Artist>(_context);
             return _artistRepository;
         }
     }
@@ -35,10 +32,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     {
         get
         {
-            if(_albumRepository is null)
-            {
-                _albumRepository = new Repository<int, Album>(_context);
-            }
+            _albumRepository ??= new Repository<int, Album>(_context);
             return _albumRepository;
         }
     }
@@ -46,10 +40,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     {
         get
         {
-            if(_songRepository is null)
-            {
-                _songRepository = new Repository<int, Song>(_context);
-            }
+            _songRepository ??= new Repository<int, Song>(_context);
             return _songRepository;
         }
     }
@@ -58,10 +49,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     {
         get
         {
-            if(_tourRepository is null)
-            {
-                _tourRepository = new Repository<int, Tour>(_context);
-            }
+            _tourRepository ??= new Repository<int, Tour>(_context);
             return _tourRepository;
         }
     }
