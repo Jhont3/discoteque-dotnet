@@ -4,7 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Discoteque.Business.IServices;
+using Discoteque.Business.Utils;
 using Discoteque.Data;
+using Discoteque.Data.Dto;
 using Discoteque.Data.Models;
 
 namespace Discoteque.Business.Services
@@ -18,41 +20,49 @@ namespace Discoteque.Business.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Song> CreateSong(Song song)
+        public async Task<BaseMessage<Song>> CreateSong(Song newSong)
         {
-            var album = await _unitOfWork.AlbumRepository.FindAsync(song.AlbumId);
-            if (album == null)
-            {
-                return null;
-            }
-            
-            // TODO: consider return album
-            // var newSong = new Song{
-            // Name = album.Name,
-            // Album = album,
-            // Genre = album.Genre,
-            // Year = album.Year
-            // };
-
-            await _unitOfWork.SongRepository.AddAsync(song);
-            await _unitOfWork.SaveAsync();
-            return song;
-        }
-
-        public async Task<List<Song>> CreateSong(List<Song> songs)
-        {
-
-            foreach (var song in songs)
-            {
-                var album = await _unitOfWork.AlbumRepository.FindAsync(song.AlbumId);
-                if (album == null) { return null; }
-            }
-            foreach (var song in songs)
-            {
-                await _unitOfWork.SongRepository.AddAsync(song);
+            try
+            {   
+                var album = await _unitOfWork.AlbumRepository.FindAsync(newSong.AlbumId);
+                if (album == null)
+                {
+                    return Utilities.BuildResponse<Song>(HttpStatusCode.NotFound, BaseMessageStatus.ALBUM_NOT_FOUND);
+                }
+                await _unitOfWork.SongRepository.AddAsync(newSong);
                 await _unitOfWork.SaveAsync();
             }
-            return songs;
+            catch (Exception ex)
+            {
+                return Utilities.BuildResponse<Song>(HttpStatusCode.InternalServerError, ex.Message);
+            } 
+
+            return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, new List<Song>(){newSong});   
+        }
+
+        public async Task<BaseMessage<Song>> CreateSongsInBatch(List<Song> songs)
+        {
+            try
+            {
+
+                foreach (var song in songs)
+                {
+                    var album = await _unitOfWork.AlbumRepository.FindAsync(song.AlbumId);
+                    if (album == null) { return Utilities.BuildResponse<Song>(HttpStatusCode.BadRequest, BaseMessageStatus.BAD_REQUEST_400);; }
+                }
+
+                foreach (var song in songs)
+                {
+                  await _unitOfWork.SongRepository.AddAsync(song);
+                }
+                await _unitOfWork.SaveAsync();
+
+            }
+            catch (Exception ex)
+            {
+                return Utilities.BuildResponse<Song>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}");
+            }
+            return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, songs);
     
         }
 

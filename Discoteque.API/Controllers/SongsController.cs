@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Discoteque.Business.IServices;
 using Discoteque.Data.Models;
@@ -54,11 +55,11 @@ namespace Discoteque.API.Controllers
         }
 
         [HttpPost]
-        [Route("CreateSongsAsync")]
-        public async Task<IActionResult> CreateSongAsync(List<Song> songs)
+        [Route("CreateSongs")]
+        public async Task<IActionResult> CreateSongs(List<Song> songs)
         {
-            var result = await _songsService.CreateSong(songs);
-            return Ok(result);
+            var newSongs = await _songsService.CreateSongsInBatch(songs);
+            return newSongs.StatusCode == HttpStatusCode.OK ? Ok(newSongs) : StatusCode((int)newSongs.StatusCode, newSongs);
         }
 
         [HttpPut]

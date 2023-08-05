@@ -29,8 +29,8 @@ namespace Discoteque.Business.Services
                     return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.BAD_REQUEST_400);
                 }
             
-            await _unitOfWork.TourRepository.AddAsync(tour);
-            await _unitOfWork.SaveAsync();
+                await _unitOfWork.TourRepository.AddAsync(tour);
+                await _unitOfWork.SaveAsync();
             }
             catch (Exception)
             {
