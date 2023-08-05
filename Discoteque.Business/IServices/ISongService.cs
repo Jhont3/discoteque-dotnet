@@ -9,12 +9,12 @@ namespace Discoteque.Business.IServices
 {
     public interface ISongService
     {
-        Task<IEnumerable<Song>> GetSongsAsync(bool areReferencesLoaded);
-        Task<IEnumerable<Song>> GetSongsByAlbumName(string song);
-        Task<Song> GetById(int id);
+        Task<BaseMessage<Song>> GetSongsAsync(bool areReferencesLoaded);
+        Task<BaseMessage<Song>> GetSongsByAlbumName(string song);
+        Task<BaseMessage<Song>> GetById(int id);
         Task<BaseMessage<Song>> CreateSong(Song Song);
         Task<BaseMessage<Song>> CreateSongsInBatch(List<Song> Songs);
-        Task<Song> UpdateSong(Song Song);
+        Task<BaseMessage<Song>> UpdateSong(Song Song);
         Task DeleteById(int id);
     }
 }

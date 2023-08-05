@@ -27,7 +27,8 @@ namespace Discoteque.API.Controllers
         public async Task<IActionResult> GetSongs(bool areReferencesLoaded = false)
         {
             var songs = await _songsService.GetSongsAsync(areReferencesLoaded);
-            return Ok(songs);
+            return songs.StatusCode == HttpStatusCode.OK ? Ok(songs) : StatusCode((int)songs.StatusCode, songs);
+
         }
 
         [HttpGet]
@@ -35,7 +36,7 @@ namespace Discoteque.API.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var song = await _songsService.GetById(id);
-            return Ok(song);
+            return song.StatusCode == HttpStatusCode.OK ? Ok(song) : StatusCode((int)song.StatusCode, song);
         }
 
         [HttpGet]
@@ -43,15 +44,15 @@ namespace Discoteque.API.Controllers
         public async Task<IActionResult> GetSongsByAlbumName(string album)
         {
             var songs = await _songsService.GetSongsByAlbumName(album);
-            return songs.Any() ? Ok(songs) : StatusCode(StatusCodes.Status404NotFound, "There was no songs by that name");
+            return songs.StatusCode == HttpStatusCode.OK ? Ok(songs) : StatusCode((int)songs.StatusCode, songs);
         }
 
         [HttpPost]
         [Route("CreateSongAsync")]
         public async Task<IActionResult> CreateSongAsync(Song song)
         {
-            var result = await _songsService.CreateSong(song);
-            return Ok(result);
+            var newSong = await _songsService.CreateSong(song);
+            return newSong.StatusCode == HttpStatusCode.OK ? Ok(newSong) : StatusCode((int)newSong.StatusCode, newSong);
         }
 
         [HttpPost]
@@ -67,7 +68,7 @@ namespace Discoteque.API.Controllers
         public async Task<IActionResult> UpdateSongAsync(Song song)
         {
             var result = await _songsService.UpdateSong(song);
-            return Ok(result);
+           return result.StatusCode == HttpStatusCode.OK ? Ok(result) : StatusCode((int)result.StatusCode, result);
         }
 
         [HttpDelete]
