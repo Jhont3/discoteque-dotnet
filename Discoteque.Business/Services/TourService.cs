@@ -7,6 +7,7 @@ using Discoteque.Data;
 using Discoteque.Data.Models;
 using Discoteque.Data.Dto;
 using System.Net;
+using Discoteque.Business.Utils;
 
 namespace Discoteque.Business.Services
 {
@@ -18,22 +19,24 @@ namespace Discoteque.Business.Services
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<TourMessage> CreateTour(Tour tour)
+        public async Task<BaseMessage<Tour>> CreateTour(Tour tour)
         {
             try
             {
                 var artist = await _unitOfWork.ArtistRepository.FindAsync(tour.ArtistId);
-                if (tour.Date.Year > 2021 || artist == null)
+                if (tour.Date.Year <= 2021 || artist == null)
                 {
-                    await _unitOfWork.TourRepository.AddAsync(tour);
-                    await _unitOfWork.SaveAsync();
+                    return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.BAD_REQUEST_400);
                 }
+            
+            await _unitOfWork.TourRepository.AddAsync(tour);
+            await _unitOfWork.SaveAsync();
             }
             catch (Exception)
             {
-                  return BuildResponse(HttpStatusCode.InternalServerError, BaseMessageStatus.INTERNAL_SERVER_ERROR_500);
+                  return Utilities.BuildResponse<Tour>(HttpStatusCode.InternalServerError, BaseMessageStatus.INTERNAL_SERVER_ERROR_500);
             }
-            return BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, new(){tour});
+            return Utilities.BuildResponse<Tour>(HttpStatusCode.OK, BaseMessageStatus.OK_200, new(){tour});
         }
 
         public async Task DeleteById(int id)
@@ -99,23 +102,5 @@ namespace Discoteque.Business.Services
             return tour;
         }
 
-        private static TourMessage BuildResponse(HttpStatusCode statusCode, string message)
-        {
-            return new TourMessage{
-                Message = message,
-                TotalElements = 0,
-                StatusCode = statusCode                
-            }; 
-        }
-    
-        private static TourMessage BuildResponse(HttpStatusCode statusCode, string message, List<Tour> tours)
-        {
-            return new TourMessage{
-                Message = message,
-                TotalElements = tours.Count,
-                StatusCode = statusCode,
-                Tours = tours                
-            }; 
-        }
     }
 }

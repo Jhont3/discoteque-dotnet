@@ -15,4 +15,5 @@ This is my repository for learning and practicing about .Net with C# in the Back
 * [x] Los albums no pueden contener en su título la siguiente palabra: Revolución, Poder, Amor y Guerra.
 * [x] Todas las validaciones se deben hacer en el service (requerimiento)
 
-*[] Crear el basemessage para todas las entidades.
+* [] Crear el basemessage para todas las entidades.
+* [] convertir el basemessage a basemessage genérico y utilizar uno solo para todos las entidades. Convertir el BuildResponse a una forma genérica totalmente de manera de que sea una clase estática en utils y poderla invocar desde todos los servicios
