@@ -68,7 +68,7 @@ namespace Discoteque.API.Controllers
         public async Task<IActionResult> UpdateSongAsync(Song song)
         {
             var result = await _songsService.UpdateSong(song);
-           return result.StatusCode == HttpStatusCode.OK ? Ok(result) : StatusCode((int)result.StatusCode, result);
+            return result.StatusCode == HttpStatusCode.OK ? Ok(result) : StatusCode((int)result.StatusCode, result);
         }
 
         [HttpDelete]
@@ -77,6 +77,14 @@ namespace Discoteque.API.Controllers
         {
             await _songsService.DeleteById(id);
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("GetSongsByYear")]
+        public async Task<IActionResult> GetSongsByYear(int year)
+        {
+            var songs = await _songsService.GetSongsByYear(year);
+            return songs.StatusCode == HttpStatusCode.OK ? Ok(songs) : StatusCode((int)songs.StatusCode, songs);
         }
         
     }

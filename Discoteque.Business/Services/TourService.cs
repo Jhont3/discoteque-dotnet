@@ -19,6 +19,16 @@ namespace Discoteque.Business.Services
         {
             _unitOfWork = unitOfWork;
         }
+
+        private DateTime ConvertDateTimeToString(string date){
+            return DateTime.Parse(date);
+        }
+
+        private string ConvertToIsoDate(DateTime date){
+            return date.ToString("yyyy-MM-dd");
+        }
+
+
         public async Task<BaseMessage<Tour>> CreateTour(Tour tour)
         {
             try
@@ -51,56 +61,129 @@ namespace Discoteque.Business.Services
                     return;
                 }  
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 return;
             }
         }
 
-        public async Task<Tour> GetById(int id)
+        public async Task<BaseMessage<Tour>> GetById(int id)
         {
-            var tour = await _unitOfWork.TourRepository.FindAsync(id);
-
-            // var newDate = ConvertToIsoDate(tour.Date);
-            
-            // var newTour = new Tour(){
-            //     Name = tour.Name,
-            //     IscompletelySold = tour.IscompletelySold,
-            //     Date = ConvertDateTimeToString(newDate),
-            //     ArtistId = tour.ArtistId,
-            //     City = tour.City,
-            // };
-
-            return tour;
+            var tour = await _unitOfWork.TourRepository.FindAsync(id);                  
+            try
+            {
+                if (tour == null)
+                {   
+                    return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
+                }
+                
+                var newDate = ConvertToIsoDate(tour.Date);
+                var newTour = new Tour(){
+                    Name = tour.Name,
+                    IscompletelySold = tour.IscompletelySold,
+                    Date = ConvertDateTimeToString(newDate),
+                    ArtistId = tour.ArtistId,
+                    City = tour.City,
+                };
+                return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, new List<Tour>(){newTour}); 
+            }
+            catch (Exception ex)
+            {
+                return Utilities.BuildResponse<Tour>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}");
+            }
         }
 
-        public async Task<IEnumerable<Tour>> GetToursByArtist(string artist)
+        public async Task<BaseMessage<Tour>> GetToursByArtist(string artist)
         {
-            IEnumerable<Tour> tours;        
-            tours = await _unitOfWork.TourRepository.GetAllAsync(x => x.Artist.Name.Equals(artist), x => x.OrderBy(x => x.Id), new Artist().GetType().Name);
-            return tours;
+            var tours = await _unitOfWork.TourRepository.GetAllAsync(x => x.Artist.Name.Equals(artist), x => x.OrderBy(x => x.Id), new Artist().GetType().Name);     
+            try
+            {
+                if (tours  == null || !tours.Any())
+                {
+                    return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
+                }
+                return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, tours.ToList());
+            }
+            catch (Exception ex)
+            {
+                 return Utilities.BuildResponse<Tour>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}");
+            }
         }
 
-        public async Task<IEnumerable<Tour>> GetToursAsync(bool areReferencesLoaded)
+        public async Task<BaseMessage<Tour>> GetToursAsync(bool areReferencesLoaded)
         {
-            IEnumerable<Tour> tours;
             if(areReferencesLoaded)
             {
-                tours = await _unitOfWork.TourRepository.GetAllAsync(null, x => x.OrderBy(x => x.Id), new Artist().GetType().Name);
+                var tours = await _unitOfWork.TourRepository.GetAllAsync(null, x => x.OrderBy(x => x.Id), new Artist().GetType().Name);
+                if (tours  == null || !tours.Any())
+                {
+                    return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
+                }
+                return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, tours.ToList());
             }
             else
             {
-                tours = await _unitOfWork.TourRepository.GetAllAsync();
-            }   
-            return tours;
+                var tours = await _unitOfWork.TourRepository.GetAllAsync();
+                if (tours  == null || !tours.Any())
+                {
+                    return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
+                }
+                return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, tours.ToList());
+            } 
         }
 
-        public async Task<Tour> UpdateTour(Tour tour)
+        public async Task<BaseMessage<Tour>> UpdateTour(Tour tour)
         {
-            await _unitOfWork.TourRepository.Update(tour);
-            await _unitOfWork.SaveAsync();
-            return tour;
+            try
+            {
+                var album = await _unitOfWork.ArtistRepository.FindAsync(tour.ArtistId);
+                if (album == null)
+                {
+                    return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
+                }
+                await _unitOfWork.TourRepository.Update(tour);
+                await _unitOfWork.SaveAsync();
+                return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, new List<Tour>(){tour});
+
+            }
+            catch (Exception ex)
+            {
+                 return Utilities.BuildResponse<Tour>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}"); 
+            }
         }
 
+        public async Task<BaseMessage<Tour>> GetToursByCity(string city)
+        {
+            var tours = await _unitOfWork.TourRepository.GetAllAsync(x => x.Equals(city));    
+            try
+            {
+                if (tours  == null || !tours.Any())
+                {
+                    return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
+                }
+                return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, tours.ToList());
+            }
+            catch (Exception ex)
+            {
+                 return Utilities.BuildResponse<Tour>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}");
+            }
+        }
+
+        public async Task<BaseMessage<Tour>> GetToursByYear(int year)
+        {
+            var tours = await _unitOfWork.TourRepository.GetAllAsync(x => x.Date.Year == year);     
+            try
+            {
+                if (tours  == null || !tours.Any())
+                {
+                    return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
+                }
+                return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, tours.ToList());
+            }
+            catch (Exception ex)
+            {
+                 return Utilities.BuildResponse<Tour>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}");
+            }
+        }
     }
 }

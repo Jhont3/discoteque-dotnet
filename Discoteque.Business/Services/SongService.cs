@@ -104,8 +104,7 @@ namespace Discoteque.Business.Services
 
         public async Task<BaseMessage<Song>> GetSongsByAlbumName(string song)
         {
-            var songs = await _unitOfWork.SongRepository.GetAllAsync(x => x.Album.Name.Equals(song), x => x.OrderBy(x => x.Id), new Album().GetType().Name);            songs = await _unitOfWork.SongRepository.GetAllAsync(x => x.Album.Name.Equals(song), x => x.OrderBy(x => x.Id), new Album().GetType().Name);
-            
+            var songs = await _unitOfWork.SongRepository.GetAllAsync(x => x.Album.Name.Equals(song), x => x.OrderBy(x => x.Id), new Album().GetType().Name);           
             try
             {
                 if (songs  == null || !songs.Any())
@@ -154,25 +153,40 @@ namespace Discoteque.Business.Services
 
         public async Task<BaseMessage<Song>> UpdateSong(Song song)
         {
-            
             try
             {
                 var album = await _unitOfWork.AlbumRepository.FindAsync(song.AlbumId);
                 if (album == null)
                 {
-                    return Utilities.BuildResponse<Song>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
+                    return Utilities.BuildResponse<Song>(HttpStatusCode.BadRequest, BaseMessageStatus.BAD_REQUEST_400);
                 }
                 await _unitOfWork.SongRepository.Update(song);
                 await _unitOfWork.SaveAsync();
-                return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, new List<Song>(){song});
 
             }
             catch (Exception ex)
             {
                  return Utilities.BuildResponse<Song>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}"); 
             }
-
+            return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, new List<Song>(){song});
         }
 
+        public async Task<BaseMessage<Song>> GetSongsByYear(int year)
+        {
+            try
+            {
+                var songs = await _unitOfWork.SongRepository.GetAllAsync(x => x.Album.Year == year, includeProperties: new Album().GetType().Name);
+                if (songs  == null || !songs.Any())
+                {
+                    return Utilities.BuildResponse<Song>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
+                }
+                return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, songs.ToList());;
+            }
+            catch (Exception ex)
+            {
+                 return Utilities.BuildResponse<Song>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}"); 
+            }
+            
+        }
     }
 }
