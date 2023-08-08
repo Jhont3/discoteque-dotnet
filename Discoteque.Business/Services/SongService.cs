@@ -85,30 +85,30 @@ namespace Discoteque.Business.Services
             
         }
         
-        public async Task<BaseMessage<Song>> GetById(int id)
+        public async Task<BaseMessage<SongDTO>> GetById(int id)
         {
             var song = await _unitOfWork.SongRepository.FindAsync(id);    
             try
             {
                 if (song == null)
                 {
-                    return Utilities.BuildResponse<Song>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
+                    return Utilities.BuildResponse<SongDTO>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
                 }
             }
             catch (Exception ex)
             {
-                return Utilities.BuildResponse<Song>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}");
+                return Utilities.BuildResponse<SongDTO>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}");
             }
 
             // TODO: 
-            // var formattedDuration = Utilities.GetLengthInMinuteNotation(song.Duration);
-            // var newSong = new Song
-            // {
-            //     Name = song.Name,
-            //     Duration = formattedDuration,
-            //     AlbumId = song.AlbumId
-            // };
-            return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, new List<Song>(){song});    
+            var formattedDuration = Utilities.GetLengthInMinuteNotation(song.Duration);
+            var newSong = new SongDTO
+            {
+                Name = song.Name,
+                Duration = formattedDuration,
+                AlbumId = song.AlbumId
+            };
+            return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, new List<SongDTO>(){newSong});    
         }
 
         public async Task<BaseMessage<Song>> GetSongsByAlbumName(string song)

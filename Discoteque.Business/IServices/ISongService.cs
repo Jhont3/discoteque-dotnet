@@ -12,7 +12,7 @@ namespace Discoteque.Business.IServices
         Task<BaseMessage<Song>> GetSongsAsync(bool areReferencesLoaded);
         Task<BaseMessage<Song>> GetSongsByAlbumName(string song);
         Task<BaseMessage<Song>> GetSongsByYear(int year);
-        Task<BaseMessage<Song>> GetById(int id);
+        Task<BaseMessage<SongDTO>> GetById(int id);
         Task<BaseMessage<Song>> CreateSong(Song Song);
         Task<BaseMessage<Song>> CreateSongsInBatch(List<Song> Songs);
         Task<BaseMessage<Song>> UpdateSong(Song Song);
