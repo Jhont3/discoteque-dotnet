@@ -87,7 +87,7 @@ namespace Discoteque.Business.Services
         
         public async Task<BaseMessage<Song>> GetById(int id)
         {
-            var song = await _unitOfWork.SongRepository.FindAsync(id);                    
+            var song = await _unitOfWork.SongRepository.FindAsync(id);    
             try
             {
                 if (song == null)
@@ -99,6 +99,15 @@ namespace Discoteque.Business.Services
             {
                 return Utilities.BuildResponse<Song>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}");
             }
+
+            // TODO: 
+            // var formattedDuration = Utilities.GetLengthInMinuteNotation(song.Duration);
+            // var newSong = new Song
+            // {
+            //     Name = song.Name,
+            //     Duration = formattedDuration,
+            //     AlbumId = song.AlbumId
+            // };
             return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, new List<Song>(){song});    
         }
 
@@ -121,7 +130,6 @@ namespace Discoteque.Business.Services
 
         public async Task<BaseMessage<Song>> GetSongsAsync(bool areReferencesLoaded)
         {
-
             try
             {
                 if(areReferencesLoaded)
@@ -148,7 +156,6 @@ namespace Discoteque.Business.Services
             {
                 return Utilities.BuildResponse<Song>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}");
             }
-
         }
 
         public async Task<BaseMessage<Song>> UpdateSong(Song song)

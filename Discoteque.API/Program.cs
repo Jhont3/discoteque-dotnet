@@ -226,7 +226,6 @@ async void PopulateDb(WebApplication app)
 
         #region Shakira
         await albumService.CreateAlbum(new Discoteque.Data.Models.Album{
-            Id = 14,
             Year = 1991,
             Name = "Magia",
             ArtistId = 3,
@@ -290,7 +289,6 @@ async void PopulateDb(WebApplication app)
             Cost = new Random().Next(1, 9) * 10_000
         });
         await albumService.CreateAlbum(new Discoteque.Data.Models.Album{
-            Id = 14,
             Year = 2015,
             Name = "El Dorado",
             ArtistId = 3,

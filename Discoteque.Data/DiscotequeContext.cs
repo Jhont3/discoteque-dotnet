@@ -5,7 +5,6 @@ namespace Discoteque.Data;
 
 public class DiscotequeContext : DbContext
 {
-    // TODO: check commented text
     public DiscotequeContext( DbContextOptions< DiscotequeContext > options ) :  base(options)
     {
 
