@@ -98,7 +98,7 @@ namespace Discoteque.Business.Services
             var tours = await _unitOfWork.TourRepository.GetAllAsync(x => x.Artist.Name.Equals(artist), x => x.OrderBy(x => x.Id), new Artist().GetType().Name);     
             try
             {
-                if (tours  == null || !tours.Any())
+                if (!tours.Any())
                 {
                     return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
                 }
@@ -115,7 +115,7 @@ namespace Discoteque.Business.Services
             if(areReferencesLoaded)
             {
                 var tours = await _unitOfWork.TourRepository.GetAllAsync(null, x => x.OrderBy(x => x.Id), new Artist().GetType().Name);
-                if (tours  == null || !tours.Any())
+                if (!tours.Any())
                 {
                     return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
                 }
@@ -124,7 +124,7 @@ namespace Discoteque.Business.Services
             else
             {
                 var tours = await _unitOfWork.TourRepository.GetAllAsync();
-                if (tours  == null || !tours.Any())
+                if (!tours.Any())
                 {
                     return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
                 }
@@ -157,7 +157,7 @@ namespace Discoteque.Business.Services
             var tours = await _unitOfWork.TourRepository.GetAllAsync(x => x.Equals(city));    
             try
             {
-                if (tours  == null || !tours.Any())
+                if (!tours.Any())
                 {
                     return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
                 }
@@ -174,7 +174,7 @@ namespace Discoteque.Business.Services
             var tours = await _unitOfWork.TourRepository.GetAllAsync(x => x.Date.Year == year);     
             try
             {
-                if (tours  == null || !tours.Any())
+                if (!tours.Any())
                 {
                     return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
                 }

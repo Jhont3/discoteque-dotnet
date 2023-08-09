@@ -41,7 +41,7 @@ public class ArtistsService : IArtistsService
         try
         {
             var artists = await _unitOfWork.ArtistRepository.GetAllAsync();
-            if (artists  == null || !artists.Any())
+            if (!artists.Any())
             {
                 return Utilities.BuildResponse<Artist>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
             }

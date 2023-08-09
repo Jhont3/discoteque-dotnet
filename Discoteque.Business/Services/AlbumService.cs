@@ -68,7 +68,7 @@ public class AlbumService : IAlbumService
             if(areReferencesLoaded)
             {
                 var albums = await _unitOfWork.AlbumRepository.GetAllAsync(null, x => x.OrderBy(x => x.Id), new Artist().GetType().Name);
-                if (albums  == null || !albums.Any())
+                if (!albums.Any())
                 {
                     return Utilities.BuildResponse<Album>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
                 }
@@ -77,7 +77,7 @@ public class AlbumService : IAlbumService
             else
             {
                 var albums = await _unitOfWork.AlbumRepository.GetAllAsync();
-                if (albums  == null || !albums.Any())
+                if (!albums.Any())
                 {
                     return Utilities.BuildResponse<Album>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
                 }
@@ -101,7 +101,7 @@ public class AlbumService : IAlbumService
         var albums = await _unitOfWork.AlbumRepository.GetAllAsync(x => x.Artist.Name.Equals(artist), x => x.OrderBy(x => x.Id), new Artist().GetType().Name);           
         try
         {
-            if (albums  == null || !albums.Any())
+            if (!albums.Any())
             {
                 return Utilities.BuildResponse<Album>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
             }
@@ -123,7 +123,7 @@ public class AlbumService : IAlbumService
         var albums = await _unitOfWork.AlbumRepository.GetAllAsync(x => x.Genre.Equals(genre), x => x.OrderBy(x => x.Id), new Artist().GetType().Name);           
         try
         {
-            if (albums  == null || !albums.Any())
+            if (!albums.Any())
             {
                 return Utilities.BuildResponse<Album>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
             }
@@ -145,7 +145,7 @@ public class AlbumService : IAlbumService
         var albums = await _unitOfWork.AlbumRepository.GetAllAsync(x => x.Year == year , x => x.OrderBy(x => x.Id), new Artist().GetType().Name);         
         try
         {
-            if (albums  == null || !albums.Any())
+            if (!albums.Any())
             {
                 return Utilities.BuildResponse<Album>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
             }

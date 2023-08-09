@@ -25,7 +25,6 @@ public interface IAlbumService
     /// <param name="maxYear">the latest year, max value 2025</param>
     /// <returns>A <see cref="List" /> of <see cref="Album"/> </returns>
     
-    // TODO: check always 400 in this method
     Task<BaseMessage<Album>> GetAlbumsByYearRange(int initialYear, int maxYear);
     
     /// <summary>

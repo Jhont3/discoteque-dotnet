@@ -100,7 +100,6 @@ namespace Discoteque.Business.Services
                 return Utilities.BuildResponse<SongDTO>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}");
             }
 
-            // TODO: 
             var formattedDuration = Utilities.GetLengthInMinuteNotation(song.Duration);
             var newSong = new SongDTO
             {
@@ -116,7 +115,7 @@ namespace Discoteque.Business.Services
             var songs = await _unitOfWork.SongRepository.GetAllAsync(x => x.Album.Name.Equals(song), x => x.OrderBy(x => x.Id), new Album().GetType().Name);           
             try
             {
-                if (songs  == null || !songs.Any())
+                if (!songs.Any())
                 {
                     return Utilities.BuildResponse<Song>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
                 }
@@ -135,7 +134,7 @@ namespace Discoteque.Business.Services
                 if(areReferencesLoaded)
                 {
                     var songs = await _unitOfWork.SongRepository.GetAllAsync(null, x => x.OrderBy(x => x.Id), new Album().GetType().Name);
-                    if (songs  == null || !songs.Any())
+                    if (!songs.Any())
                     {
                         return Utilities.BuildResponse<Song>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
                     }
@@ -144,7 +143,7 @@ namespace Discoteque.Business.Services
                 else
                 {
                     var songs = await _unitOfWork.SongRepository.GetAllAsync();
-                    if (songs  == null || !songs.Any())
+                    if (!songs.Any())
                     {
                         return Utilities.BuildResponse<Song>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
                     }
@@ -183,7 +182,7 @@ namespace Discoteque.Business.Services
             try
             {
                 var songs = await _unitOfWork.SongRepository.GetAllAsync(x => x.Album.Year == year, includeProperties: new Album().GetType().Name);
-                if (songs  == null || !songs.Any())
+                if (!songs.Any())
                 {
                     return Utilities.BuildResponse<Song>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
                 }
