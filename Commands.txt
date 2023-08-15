@@ -34,7 +34,20 @@ cd D.. .Data
 dotnet add package Microsoft.EntityFrameworkCore.Design -v 7.0.7
 dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore -v 7.0.9
 
-TOOLS:
+dotnet new classlib -o Discoteque.Tests
+dotnet sln add Discoteque.Tests/
+dotnet add Discoteque.Tests reference Discoteque.Data/Discoteque.Data.csproj
+dotnet add Discoteque.Tests reference Discoteque.Business/Discoteque.Business.csproj
+dotnet add Discoteque.Tests package Coverlet.collector --version 6.0.0
+dotnet add Discoteque.Tests package Microsoft.NET.Test.Sdk --version 17.6.3
+dotnet add Discoteque.Tests package MSTest.TestAdapter --version 3.1.1
+dotnet add Discoteque.Tests package MSTest.TestFramework --version 3.1.1
+
+cd D.. Tests/
+dotnet add package NSubstitute
+dotnet add package NSubstitute.Analyzers.CSharp
+
+VSC TOOLS:
 Polyglot Notebooks
 
 Others...

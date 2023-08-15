@@ -102,12 +102,12 @@ namespace Discoteque.Business.Services
                 {
                     return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
                 }
-                return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, tours.ToList());
             }
             catch (Exception ex)
             {
                  return Utilities.BuildResponse<Tour>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}");
             }
+            return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, tours.ToList());
         }
 
         public async Task<BaseMessage<Tour>> GetToursAsync(bool areReferencesLoaded)
