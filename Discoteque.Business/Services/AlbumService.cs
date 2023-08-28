@@ -27,13 +27,13 @@ public class AlbumService : IAlbumService
     /// <returns>The created album with an Id assigned</returns>
     public async Task<BaseMessage<Album>> CreateAlbum(Album album)
     {   
-        var newAlbum = new Album{
-            Name = album.Name,
-            ArtistId = album.ArtistId,
-            Genre = album.Genre,
-            Year = album.Year,
-            Cost = album.Cost
-        };
+        // var newAlbum = new Album{
+        //     Name = album.Name,
+        //     ArtistId = album.ArtistId,
+        //     Genre = album.Genre,
+        //     Year = album.Year,
+        //     Cost = album.Cost
+        // };
 
         try
         {   
@@ -105,12 +105,12 @@ public class AlbumService : IAlbumService
             {
                 return Utilities.BuildResponse<Album>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
             }
-            return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, albums.ToList());
         }
         catch (Exception ex)
         {
-                return Utilities.BuildResponse<Album>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}");
+            return Utilities.BuildResponse<Album>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}");
         }        
+        return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, albums.ToList());
     }
 
     /// <summary>

@@ -17,3 +17,7 @@ This is my repository for learning and practicing about .Net with C# in the Back
 
 * [x] Crear el basemessage para todas las entidades.
 * [x] Convertir el basemessage a basemessage genérico y utilizar uno solo para todos las entidades. Convertir el BuildResponse a una forma genérica totalmente de manera de que sea una clase estática en utils y poderla invocar desde todos los servicios
+
+* [] Escribir una prueba que se encargue de revisar la inserción y una prueba por cada condición. Completar los casos de prueba para canciones y tour.
+* [] Escribir una prueba que levante una excepción
+* [] Escribir una prueba para las busquedas parametrizadas

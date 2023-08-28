@@ -34,5 +34,9 @@ public static class Utilities
         };
     }
     #endregion
+
+    public static string ConvertToIsoDate(DateTime date){
+        return date.ToString("yyyy-MM-dd");
+    }
     
 }

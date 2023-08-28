@@ -9,6 +9,7 @@ using Discoteque.Data.Dto;
 using System.Net;
 using Discoteque.Business.Utils;
 
+
 namespace Discoteque.Business.Services
 {
     public class TourService : ITourService
@@ -19,16 +20,6 @@ namespace Discoteque.Business.Services
         {
             _unitOfWork = unitOfWork;
         }
-
-        private DateTime ConvertDateTimeToString(string date){
-            return DateTime.Parse(date);
-        }
-
-        private string ConvertToIsoDate(DateTime date){
-            return date.ToString("yyyy-MM-dd");
-        }
-
-
         public async Task<BaseMessage<Tour>> CreateTour(Tour tour)
         {
             try
@@ -67,30 +58,31 @@ namespace Discoteque.Business.Services
             }
         }
 
-        public async Task<BaseMessage<Tour>> GetById(int id)
+        public async Task<BaseMessage<TourDTO>> GetById(int id)
         {
             var tour = await _unitOfWork.TourRepository.FindAsync(id);                  
             try
             {
                 if (tour == null)
                 {   
-                    return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
+                    return Utilities.BuildResponse<TourDTO>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
                 }
-                
-                var newDate = ConvertToIsoDate(tour.Date);
-                var newTour = new Tour(){
-                    Name = tour.Name,
-                    IscompletelySold = tour.IscompletelySold,
-                    Date = ConvertDateTimeToString(newDate),
-                    ArtistId = tour.ArtistId,
-                    City = tour.City,
-                };
-                return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, new List<Tour>(){newTour}); 
             }
             catch (Exception ex)
             {
-                return Utilities.BuildResponse<Tour>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}");
+                return Utilities.BuildResponse<TourDTO>(HttpStatusCode.InternalServerError, $"{BaseMessageStatus.INTERNAL_SERVER_ERROR_500} | {ex.Message}");
             }
+
+            var newDate = Utilities.ConvertToIsoDate(tour.Date);
+            var newTour = new TourDTO(){
+                Name = tour.Name,
+                IscompletelySold = tour.IscompletelySold,
+                Date = newDate,
+                ArtistId = tour.ArtistId,
+                City = tour.City,
+            };
+
+            return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, new List<TourDTO>(){newTour}); 
         }
 
         public async Task<BaseMessage<Tour>> GetToursByArtist(string artist)

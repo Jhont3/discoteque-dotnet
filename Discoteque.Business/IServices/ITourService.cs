@@ -11,7 +11,7 @@ namespace Discoteque.Business.IServices
     {
         Task<BaseMessage<Tour>> GetToursAsync(bool areReferencesLoaded);
         Task<BaseMessage<Tour>> GetToursByArtist(string artist);
-        Task<BaseMessage<Tour>> GetById(int id);
+        Task<BaseMessage<TourDTO>> GetById(int id);
         Task<BaseMessage<Tour>> CreateTour(Tour tour);
         Task<BaseMessage<Tour>> UpdateTour(Tour tour);
         Task<BaseMessage<Tour>> GetToursByYear(int year);
