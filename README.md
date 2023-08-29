@@ -21,3 +21,6 @@ This is my repository for learning and practicing about .Net with C# in the Back
 * [] Escribir una prueba que se encargue de revisar la inserción y una prueba por cada condición. Completar los casos de prueba para canciones y tour.
 * [] Escribir una prueba que levante una excepción
 * [] Escribir una prueba para las busquedas parametrizadas
+
+
+* [] Migración / Uso de Supabase

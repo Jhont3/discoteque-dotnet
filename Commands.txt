@@ -54,3 +54,7 @@ Others...
 dotnet new webapi -o Discoteque
 dotnet build
 dotnet run   < go to "http://localhost:5253/swagger/index.html" URL to watch api documentation >
+
+cd API & Business
+dotnet add package AutoMapper --version 12.0.1         
+dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection --version 12.0.1

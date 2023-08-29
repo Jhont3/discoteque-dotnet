@@ -13,6 +13,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add services to the container.
+builder.Services.AddAutoMapper(typeof(Program));
+// builder.Services.AddAutoMapper(typeof(MappingProfile   Automapper?));
+
 builder.Services.AddDbContext<DiscotequeContext>(
     opt => opt.UseInMemoryDatabase("Discoteque")
 );

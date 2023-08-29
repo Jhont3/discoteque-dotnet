@@ -8,17 +8,19 @@ using Discoteque.Data.Models;
 using Discoteque.Data.Dto;
 using System.Net;
 using Discoteque.Business.Utils;
-
+using AutoMapper;
 
 namespace Discoteque.Business.Services
 {
     public class TourService : ITourService
     {
         private IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public TourService(IUnitOfWork unitOfWork)
+        public TourService(IUnitOfWork unitOfWork, IMapper mapper) 
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
         public async Task<BaseMessage<Tour>> CreateTour(Tour tour)
         {
@@ -102,25 +104,25 @@ namespace Discoteque.Business.Services
             return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, tours.ToList());
         }
 
-        public async Task<BaseMessage<Tour>> GetToursAsync(bool areReferencesLoaded)
+        public async Task<BaseMessage<TourDTO>> GetToursAsync(bool areReferencesLoaded)
         {
             if(areReferencesLoaded)
             {
                 var tours = await _unitOfWork.TourRepository.GetAllAsync(null, x => x.OrderBy(x => x.Id), new Artist().GetType().Name);
                 if (!tours.Any())
                 {
-                    return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
+                    return Utilities.BuildResponse<TourDTO>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
                 }
-                return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, tours.ToList());
+                return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, _mapper.Map<List<TourDTO>>(tours));
             }
             else
             {
                 var tours = await _unitOfWork.TourRepository.GetAllAsync();
                 if (!tours.Any())
                 {
-                    return Utilities.BuildResponse<Tour>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
+                    return Utilities.BuildResponse<TourDTO>(HttpStatusCode.NotFound, BaseMessageStatus.ELEMENT_NOT_FOUND);
                 }
-                return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, tours.ToList());
+                return Utilities.BuildResponse(HttpStatusCode.OK, BaseMessageStatus.OK_200, _mapper.Map<List<TourDTO>>(tours));
             } 
         }
 

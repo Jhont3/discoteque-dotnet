@@ -9,7 +9,7 @@ namespace Discoteque.Business.IServices
 {
     public interface ITourService
     {
-        Task<BaseMessage<Tour>> GetToursAsync(bool areReferencesLoaded);
+        Task<BaseMessage<TourDTO>> GetToursAsync(bool areReferencesLoaded);
         Task<BaseMessage<Tour>> GetToursByArtist(string artist);
         Task<BaseMessage<TourDTO>> GetById(int id);
         Task<BaseMessage<Tour>> CreateTour(Tour tour);
